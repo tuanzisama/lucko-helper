@@ -37,6 +37,7 @@ import me.lucko.helper.Schedulers;
 import me.lucko.helper.protocol.Protocol;
 import me.lucko.helper.reflect.MinecraftVersion;
 import me.lucko.helper.reflect.MinecraftVersions;
+import me.lucko.helper.utils.Log;
 import me.lucko.helper.utils.Players;
 import net.md_5.bungee.api.chat.BaseComponent;
 import org.bukkit.Location;
@@ -58,9 +59,19 @@ public class PacketSignPromptFactory implements SignPromptFactory {
 
     @Override
     public void openPrompt(@Nonnull Player player, @Nonnull List<String> lines, @Nonnull ResponseHandler responseHandler) {
+        openPrompt(player, lines, Material.WALL_SIGN, responseHandler);
+    }
+
+    @Override
+    public void openPrompt(@Nonnull Player player, @Nonnull List<String> lines, @Nonnull Material signMaterial, @Nonnull ResponseHandler responseHandler) {
+        if (!signMaterial.name().equalsIgnoreCase("_sign")) {
+            Log.info("Material: '" + signMaterial.name() + "' may not be a sign, so the prompt will not open.");
+            return;
+        }
+
         Location location = player.getLocation().clone();
         location.setY(255);
-        Players.sendBlockChange(player, location, Material.WALL_SIGN);
+        Players.sendBlockChange(player, location, signMaterial);
 
         BlockPosition position = new BlockPosition(location.toVector());
         PacketContainer writeToSign = new PacketContainer(PacketType.Play.Server.TILE_ENTITY_DATA);
