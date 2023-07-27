@@ -47,6 +47,7 @@ import org.bukkit.entity.Player;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
 
@@ -64,7 +65,7 @@ public class PacketSignPromptFactory implements SignPromptFactory {
 
     @Override
     public void openPrompt(@Nonnull Player player, @Nonnull List<String> lines, @Nonnull Material signMaterial, @Nonnull ResponseHandler responseHandler) {
-        if (!signMaterial.name().equalsIgnoreCase("_sign")) {
+        if (!signMaterial.name().toLowerCase(Locale.ENGLISH).endsWith("_sign")) {
             Log.info("Material: '" + signMaterial.name() + "' may not be a sign, so the prompt will not open.");
             return;
         }
