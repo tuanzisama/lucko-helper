@@ -72,7 +72,7 @@ public class PacketSignPromptFactory implements SignPromptFactory {
 
         Location location = player.getLocation().clone();
         location.setY(255);
-        Players.sendBlockChange(player, location, signMaterial);
+        Players.sendBlockChange(player, location, signMaterial.createBlockData());
 
         BlockPosition position = new BlockPosition(location.toVector());
         PacketContainer writeToSign = new PacketContainer(PacketType.Play.Server.TILE_ENTITY_DATA);
@@ -124,7 +124,7 @@ public class PacketSignPromptFactory implements SignPromptFactory {
 
                     // cleanup this instance
                     sub.close();
-                    Players.sendBlockChange(player, location, Material.AIR);
+                    Players.sendBlockChange(player, location, Material.AIR.createBlockData());
                 });
     }
 

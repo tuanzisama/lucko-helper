@@ -40,6 +40,7 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
+import org.bukkit.block.data.BlockData;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -239,6 +240,10 @@ public final class Players {
 
     public static void sendBlockChange(Player player, Block block, Material type) {
         sendBlockChange(player, block, type, 0);
+    }
+
+    public static void sendBlockChange(Player player, Location loc, BlockData blockData) {
+        player.sendBlockChange(loc, blockData);
     }
 
     public static void spawnParticle(Player player, Location location, Particle particle) {
